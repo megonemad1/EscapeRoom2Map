@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
+using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
 public class getURlParam : MonoBehaviour
 {
@@ -10,7 +13,9 @@ public class getURlParam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       onUrl.Invoke( Application.absoluteURL);
+        Regex param = new Regex(@"(?:\?|&|;)([^=]+)=([^&|;#]+)");
+        foreach (Match p in param.Matches(Application.absoluteURL))
+            onUrl.Invoke(p.ToString());
     }
 
 }
